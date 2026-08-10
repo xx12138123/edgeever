@@ -2,6 +2,8 @@
 
 [简体中文](README.zh-CN.md) | English
 
+使用D1分片存储替代R2
+
 > **EdgeEver: A serverless, 100% free, open-source, and AI-native self-hosted Evernote alternative.**
 
 EdgeEver is a modern, open-source notes workspace built for effortless knowledge management. It revives the beloved Evernote-style three-pane layout while offering an open data architecture and seamless AI Agent integration for complete ownership and smart productivity.
