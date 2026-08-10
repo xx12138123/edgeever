@@ -48,7 +48,7 @@ export const decodeDemoAttachment = (resource: DemoAttachmentSeed): Uint8Array =
 export const DEMO_ATTACHMENT_MARKDOWN_ZH = `
 ### 📎 7. 附件上传与下载示例
 
-下面这些是真实存储在 Demo R2 中的示例附件，点击即可下载，帮助你快速体验不同文件类型的附件能力：
+下面这些是真实存储在 Demo 数据库中的示例附件，点击即可下载，帮助你快速体验不同文件类型的附件能力：
 
 - [📄 产品简介 PDF：edgeever-product-brief.pdf](/api/v1/resources/res_demo_product_brief_pdf/blob)
 - [📊 功能矩阵 CSV：feature-matrix.csv](/api/v1/resources/res_demo_feature_matrix_csv/blob)
@@ -58,7 +58,7 @@ export const DEMO_ATTACHMENT_MARKDOWN_ZH = `
 export const DEMO_ATTACHMENT_MARKDOWN_EN = `
 ### 📎 7. Attachment Upload & Download Demo
 
-These are real sample files stored in the Demo R2 bucket. Click any card to download and try different attachment types:
+These are real sample files stored in the Demo database. Click any card to download and try different attachment types:
 
 - [📄 Product brief PDF: edgeever-product-brief.pdf](/api/v1/resources/res_demo_product_brief_pdf/blob)
 - [📊 Feature matrix CSV: feature-matrix.csv](/api/v1/resources/res_demo_feature_matrix_csv/blob)

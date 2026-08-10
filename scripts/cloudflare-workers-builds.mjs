@@ -97,8 +97,6 @@ const buildVariables = () => {
     "WORKERS_DEV",
     "D1_DATABASE_NAME",
     "D1_DATABASE_ID",
-    "R2_BUCKET_NAME",
-    "R2_PREVIEW_BUCKET_NAME",
     "AUTH_USERNAME",
     "AUTH_PASSWORD",
     "AUTH_PASSWORD_HASH",

@@ -208,22 +208,6 @@ const ensureD1 = (values) => {
   return true;
 };
 
-const ensureR2 = (values, name) => {
-  const bucketName = envValue(name, values);
-  if (!bucketName) {
-    return name === "R2_PREVIEW_BUCKET_NAME" || check(`${name}`, false, "missing bucket name");
-  }
-
-  const result = runWrangler(["r2", "bucket", "create", bucketName]);
-  const output = `${result.stdout}\n${result.stderr}`.trim();
-  if (result.status === 0 || /already exists|binding already exists|bucket.+exists/i.test(output)) {
-    console.log(`[ok] R2 bucket ${bucketName}`);
-    return true;
-  }
-
-  console.error(output);
-  return check(`create R2 bucket ${bucketName}`, false);
-};
 
 const ensureAuthPassword = (values) => {
   const currentHash = envValue("AUTH_PASSWORD_HASH", values);
@@ -274,18 +258,6 @@ const doctor = () => {
       "D1 database id",
       Boolean(databaseId && databaseId !== PLACEHOLDER_D1_ID && UUID_PATTERN.test(databaseId)),
       databaseId && databaseId !== PLACEHOLDER_D1_ID ? databaseId : "missing",
-    ) && passed;
-
-  passed =
-    check("R2 bucket name", Boolean(envValue("R2_BUCKET_NAME", values)), envValue("R2_BUCKET_NAME", values) || "missing") &&
-    passed;
-
-  const demoMode = envValue("DEMO_MODE", values).toLowerCase();
-  passed =
-    check(
-      "demo mode",
-      !demoMode || ["true", "false"].includes(demoMode),
-      demoMode === "true" ? "enabled, daily reset cron will be generated" : "disabled",
     ) && passed;
 
   const passwordHash = envValue("AUTH_PASSWORD_HASH", values);
@@ -339,8 +311,6 @@ const setup = () => {
   }
 
   passed = ensureD1(values) && passed;
-  passed = ensureR2(values, "R2_BUCKET_NAME") && passed;
-  passed = ensureR2(values, "R2_PREVIEW_BUCKET_NAME") && passed;
   passed = ensureAuthPassword(values) && passed;
 
   process.exit(passed ? 0 : 1);

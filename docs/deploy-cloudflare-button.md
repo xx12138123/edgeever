@@ -8,8 +8,7 @@ This document provides a detailed step-by-step guide for deploying EdgeEver onli
 
 ## Prerequisites
 
-- **GitHub Account** (for Forking the repository and enabling automated updates)
-- **Cloudflare Account** (for hosting Worker logic, SQLite D1 database, and R2 storage)
+- **Cloudflare Account** (for hosting Worker logic and the SQLite D1 database that also stores attachment blobs)
 
 ---
 
@@ -23,18 +22,14 @@ This document provides a detailed step-by-step guide for deploying EdgeEver onli
 
 ---
 
-### Step 2: Create Storage & Database Resources in Cloudflare
+### Step 2: Create the Database Resource in Cloudflare
 
 Log into your [Cloudflare Dashboard](https://dash.cloudflare.com/):
 
 1. **Create a D1 Database**:
    - Navigate to **Workers & Pages** -> **D1**, then click **Create database**.
    - Database name: exactly `edgeever`, then click **Create**.
-2. **Create an R2 Bucket** (for note attachments & images):
-   - Navigate to **Workers & Pages** -> **R2**, then click **Create bucket**.
-   - Enter a globally unique bucket name (e.g., `my-edgeever-resources`), then click **Create bucket**.
-
----
+   - Note attachments and images are stored as ordered shards inside this D1 database; no separate bucket is required.
 
 ### Step 3: Import Project & Configure Resources (Bindings & Secrets)
 
@@ -48,7 +43,6 @@ Log into your [Cloudflare Dashboard](https://dash.cloudflare.com/):
 | Type | Binding / Variable Name | Value / Bound Resource | Purpose |
 | :--- | :--- | :--- | :--- |
 | **D1 Database Binding** | `DB` | Select `edgeever` database | Stores notes & structured data |
-| **R2 Bucket Binding** | `RESOURCES` | Select your created R2 bucket | Stores images & file attachments |
 | **Environment Variable** | `EDGE_EVER_AUTH_USERNAME` | `admin` (customizable) | Admin login username |
 | **Environment Variable (Secret)** | `EDGE_EVER_AUTH_PASSWORD` | Set your admin password | Initial login credential |
 
@@ -97,7 +91,7 @@ You can also pick `stable` / `edge` when manually running the workflow.
 
 ## Troubleshooting
 
-- **Initial build failed**: Check the Worker **Deployments** log. Verify that the D1 binding is `DB`, its database is named exactly `edgeever`, the R2 binding is `RESOURCES`, and the Workers Builds API token has D1 read/edit permission. For an intentionally different D1 database, add the build variable `EDGE_EVER_D1_DATABASE_ID` with its UUID.
+- **Initial build failed**: Check the Worker **Deployments** log. Verify that the D1 binding is `DB`, its database is named exactly `edgeever`, and the Workers Builds API token has D1 read/edit permission. For an intentionally different D1 database, add the build variable `EDGE_EVER_D1_DATABASE_ID` with its UUID.
 - **Updates not syncing**:
   1. On the Fork **Actions** tab, enable **Update deployed EdgeEver** (scheduled workflows are off by default on public forks).
   2. Run it once with **Run workflow**. Open the job **Summary**: it states the upstream target version and whether the fork was updated, already aligned, or failed.

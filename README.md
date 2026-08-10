@@ -68,7 +68,7 @@ Copy this prompt into an AI Agent configured with GitHub and Cloudflare MCP serv
 Deploy EdgeEver online:
 1. Fork https://github.com/tianma-if/edgeever.
 2. Import the Fork into Cloudflare Workers & Pages.
-3. Configure D1, R2, `EDGE_EVER_AUTH_USERNAME` (prefilled as `admin`, customizable), the `EDGE_EVER_AUTH_PASSWORD` Worker Secret, and the production `main` build.
+3. Configure D1, `EDGE_EVER_AUTH_USERNAME` (prefilled as `admin`, customizable), the `EDGE_EVER_AUTH_PASSWORD` Worker Secret, and the production `main` build.
 4. Start the first build and verify `/api/health`, `/api/openapi.json`, and login.
 5. Enable and run `Update deployed EdgeEver` once.
 ```
@@ -81,14 +81,14 @@ Complete setup in 4 simple web steps:
 
 1. **Fork the Repository**: Click **Fork** at the top right of GitHub to fork EdgeEver into your personal account.
 2. **Import into Cloudflare**: Log into the Cloudflare Dashboard, navigate to **Workers & Pages**, and choose to import your Fork repository.
-3. **Bind Resources & Credentials**: Bind the D1 database (`DB`), R2 bucket (`RESOURCES`), set `EDGE_EVER_AUTH_USERNAME` (default `admin`, customizable), and set the Worker Secret `EDGE_EVER_AUTH_PASSWORD` as your admin password.
+3. **Bind Resources & Credentials**: Bind the D1 database (`DB`), set `EDGE_EVER_AUTH_USERNAME` (default `admin`, customizable), and set the Worker Secret `EDGE_EVER_AUTH_PASSWORD` as your admin password. Image and attachment blobs are stored inside D1, so no R2 bucket is required.
 4. **Build & Verify**: Start the first build with default settings. Once complete, visit `/api/health` to verify a `200` response before logging in.
 
 > 📖 For full step-by-step instructions and configuration details, see the [Online Deployment Guide](docs/deploy-cloudflare-button.md).
 
 ---
 
-> 💡 **Deployment Tip (Cloudflare R2 Billing)**: Although Cloudflare R2 offers a generous free tier that note-taking workloads are unlikely to ever exceed, it requires binding a payment method (such as a dual-currency credit card) to activate. Based on personal experience, for users in mainland China, VISA cards from China Merchants Bank (CMB) or Shanghai Pudong Development Bank (SPDB) are typically the fastest to get verified (and most of these cards have no annual fees or easily waivable ones, so there are no extra holding costs).
+> 💡 **Deployment Tip (No R2 required)**: EdgeEver stores image and attachment blobs directly inside the D1 database as ordered shards, so deployment no longer requires an R2 bucket or binding a payment method. The optional **Advanced Object Storage** feature still lets you offload new attachments to an S3-compatible service if you prefer.
 
 ## Multi-Account Login
 
@@ -129,7 +129,7 @@ On platforms without a native client, EdgeEver can be installed as a PWA using C
 - iOS app: Native SwiftUI in `apps/ios` (iOS 17+), with a packaged TipTap EditorBundle, GRDB local mirror/outbox, and Android-aligned shell chrome.
 - Native desktop app: Electron + Rust sidecar combines a consistent cross-platform experience with high-performance local data services; SQLite enables offline editing, incremental sync when back online, and local backups.
 - Web clipper: Manifest V3, Mozilla Readability, and Turndown for Chrome, Microsoft Edge, and Firefox.
-- Backend: Cloudflare Workers, Hono, Zod, D1, and R2, with REST API, OpenAPI, and Remote MCP.
+- Backend: Cloudflare Workers, Hono, Zod, and D1 (with sharded blob storage), with REST API, OpenAPI, and Remote MCP.
 
 ## Quick Start
 
@@ -156,7 +156,7 @@ scripts           Wrangler wrapper, password hash, CLI, MCP stdio bridge, Everno
 migrations        D1 database migrations
 docs              OpenAPI schema, architecture, migration, and deployment docs
 .github/workflows CI for web, mobile, iOS, desktop packaging, deployment, and releases
-wrangler.toml     Cloudflare Workers, Assets, D1, R2 configuration
+wrangler.toml     Cloudflare Workers, Assets, and D1 configuration
 ```
 
 ## Content Formats

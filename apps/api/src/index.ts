@@ -133,6 +133,7 @@ import {
 import { registerNotebookRoutes } from "./notebook-routes";
 import { registerMemoShareRoutes, registerPublicShareRoutes } from "./share-routes";
 import {
+  BUILTIN_BUCKET_NAME,
   deleteStoredObjects,
   resolveObjectStorage,
 } from "./object-storage";
@@ -220,7 +221,6 @@ const SESSION_COOKIE = "edgeever_session";
 const DEFAULT_WORKSPACE_ID = "ws_default";
 const DEFAULT_SESSION_TTL_DAYS = 400;
 const MAX_SESSION_TTL_DAYS = 400;
-const DEFAULT_R2_BUCKET_NAME = "edgeever-resources";
 const REVISION_SNAPSHOT_INTERVAL_MS = 5 * 60 * 1000;
 const app = new Hono<AppEnv>();
 
@@ -2205,7 +2205,7 @@ const ensureDemoSeed = async (
   const db = env.storage.db;
   const now = isoNow();
   const statements: D1PreparedStatement[] = [];
-  const bucketName = env.EDGE_EVER_R2_BUCKET_NAME?.trim() || DEFAULT_R2_BUCKET_NAME;
+  const bucketName = BUILTIN_BUCKET_NAME;
   const overwriteExisting = options.overwriteExisting === true;
   const existingNotebookIds = overwriteExisting
     ? new Set<string>()

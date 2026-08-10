@@ -20,10 +20,9 @@ This document defines the standard operating specifications and conventions for 
 
 4. **Resource Bindings & Secrets**
    - **D1 Database Binding**: Binding name `DB`, associated with a database named exactly `edgeever`.
-   - **R2 Bucket Binding**: Binding name `RESOURCES`, associated with a globally unique R2 Bucket.
+   - Image and attachment blobs are persisted inside D1 as ordered shards (each row under the D1 per-row size limit); no R2 bucket binding is required.
    - **Admin username**: Configure `EDGE_EVER_AUTH_USERNAME`; it defaults to `admin` and can be replaced with a custom username.
    - **Worker Secret**: Add secret `EDGE_EVER_AUTH_PASSWORD` for initial admin password.
-
 5. **Configure Workers Builds Commands**
    - In the Cloudflare project build settings, set the standard commands:
 

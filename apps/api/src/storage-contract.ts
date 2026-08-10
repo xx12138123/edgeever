@@ -1,8 +1,9 @@
 /**
  * Platform-neutral storage seams used by the API layer.
  *
- * The current production adapter is Cloudflare D1/R2, so these contracts are
- * intentionally compatible with the Workers runtime types. A future
+ * The current production adapter is Cloudflare D1 (structured data plus a
+ * sharded blob store) and optional S3-compatible object storage, so these
+ * contracts are intentionally compatible with the Workers runtime types. A
  * self-hosted adapter can implement the same operations with SQLite and a
  * filesystem or S3-compatible object store without changing route logic.
  */
@@ -53,7 +54,12 @@ export type RelationalDatabaseAdapter = {
 /** Cloudflare's native Worker bindings, used only by the platform adapter. */
 export type CloudflareStorageBindings = {
   DB: DatabaseAdapter;
-  RESOURCES: BlobStoreAdapter;
+  /**
+   * Optional R2 bucket binding. The built-in object store now persists blobs
+   * inside D1 (see d1-blob-store.ts), so an R2 binding is no longer required.
+   * Kept only so a deployment with a pre-existing binding still loads.
+   */
+  RESOURCES?: BlobStoreAdapter;
 };
 
 export type StorageAdapterKind = "cloudflare" | "self_hosted";

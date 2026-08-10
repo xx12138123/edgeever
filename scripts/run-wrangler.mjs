@@ -212,12 +212,6 @@ if (isRemoteCommand && config.includes(`database_id = "${PLACEHOLDER_D1_ID}"`)) 
   }
 }
 
-config = replaceTomlValue(config, "bucket_name", envValue("R2_BUCKET_NAME"));
-config = replaceTomlValue(
-  config,
-  "preview_bucket_name",
-  envValue("R2_PREVIEW_BUCKET_NAME"),
-);
 
 const runtimeVars = {
   // Keep the login identifier explicit in generated online deployments so
@@ -229,7 +223,6 @@ const runtimeVars = {
   EDGE_EVER_AUTH_LOGIN_USERNAME_COOLDOWN_SECONDS: envValue("AUTH_LOGIN_USERNAME_COOLDOWN_SECONDS"),
   EDGE_EVER_AUTH_LOGIN_IP_MAX_ATTEMPTS: envValue("AUTH_LOGIN_IP_MAX_ATTEMPTS"),
   EDGE_EVER_AUTH_LOGIN_IP_COOLDOWN_SECONDS: envValue("AUTH_LOGIN_IP_COOLDOWN_SECONDS"),
-  EDGE_EVER_R2_BUCKET_NAME: envValue("R2_BUCKET_NAME"),
   EDGE_EVER_DEMO_MODE: envValue("DEMO_MODE"),
   EDGE_EVER_LOCAL_DEMO_SEED: envValue("LOCAL_DEMO_SEED"),
   // Auth-free access is a local-development capability. Remote deployments

@@ -22,7 +22,7 @@ const copy = isEnglish
       copied: "Copied",
       copyFailed: "Copy failed",
       promptText:
-        "Deploy EdgeEver online:\n1. Fork https://github.com/tianma-if/edgeever.\n2. Import the Fork into Cloudflare Workers & Pages.\n3. Configure D1 DB, R2 RESOURCES, the EDGE_EVER_AUTH_PASSWORD Worker Secret, and Workers Builds using docs/agent-deploy-cloudflare.md.\n4. Start the first build, verify the health endpoint and login, then run Update deployed EdgeEver once.",
+        "Deploy EdgeEver online:\n1. Fork https://github.com/tianma-if/edgeever.\n2. Import the Fork into Cloudflare Workers & Pages.\n3. Configure D1 DB, the EDGE_EVER_AUTH_PASSWORD Worker Secret, and Workers Builds using docs/agent-deploy-cloudflare.md.\n4. Start the first build, verify the health endpoint and login, then run Update deployed EdgeEver once.",
     }
   : {
       chooseOne: "以下两种方案任选其一即可完成部署。",
@@ -40,7 +40,7 @@ const copy = isEnglish
       copied: "已复制",
       copyFailed: "复制失败",
       promptText:
-        "请在线完成 EdgeEver 部署：\n1. Fork https://github.com/tianma-if/edgeever。\n2. 将这个 Fork 导入 Cloudflare Workers & Pages。\n3. 按照 docs/agent-deploy-cloudflare.zh-CN.md 配置 D1 DB、R2 RESOURCES、EDGE_EVER_AUTH_PASSWORD Worker Secret 和 Workers Builds。\n4. 启动首次构建，验证健康检查和登录，然后手动运行一次 Update deployed EdgeEver。",
+        "请在线完成 EdgeEver 部署：\n1. Fork https://github.com/tianma-if/edgeever。\n2. 将这个 Fork 导入 Cloudflare Workers & Pages。\n3. 按照 docs/agent-deploy-cloudflare.zh-CN.md 配置 D1 DB、EDGE_EVER_AUTH_PASSWORD Worker Secret 和 Workers Builds。\n4. 启动首次构建，验证健康检查和登录，然后手动运行一次 Update deployed EdgeEver。",
     };
 ---
 
@@ -167,7 +167,7 @@ const copy = isEnglish
             </li>
             <li class="flex items-start gap-2">
               <span class="text-emerald-400 font-bold shrink-0 font-mono">3.</span>
-              <span class="break-words">{isEnglish ? "Configure following" : "按照"} <code class="text-amber-300/90 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">{isEnglish ? "docs/agent-deploy-cloudflare.md" : "docs/agent-deploy-cloudflare.zh-CN.md"}</code> {isEnglish ? "for" : "配置"} <code class="text-cyan-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">D1 DB</code>, <code class="text-cyan-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">R2 RESOURCES</code>, <code class="text-cyan-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">EDGE_EVER_AUTH_PASSWORD</code> {isEnglish ? "Worker Secret, and" : "Worker Secret 和"} <code class="text-teal-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">Workers Builds</code></span>
+              <span class="break-words">{isEnglish ? "Configure following" : "按照"} <code class="text-amber-300/90 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">{isEnglish ? "docs/agent-deploy-cloudflare.md" : "docs/agent-deploy-cloudflare.zh-CN.md"}</code> {isEnglish ? "for" : "配置"} <code class="text-cyan-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">D1 DB</code>, <code class="text-cyan-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">EDGE_EVER_AUTH_PASSWORD</code> {isEnglish ? "Worker Secret, and" : "Worker Secret 和"} <code class="text-teal-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono">Workers Builds</code></span>
             </li>
             <li class="flex items-start gap-2">
               <span class="text-emerald-400 font-bold shrink-0 font-mono">4.</span>
@@ -182,11 +182,11 @@ const copy = isEnglish
         <Icon class="mt-0.5 h-4 w-4 shrink-0 text-amber-600/70" name="bx:bx-credit-card" />
         {isEnglish ? (
           <p>
-            <span class="font-semibold text-amber-950">Note:</span> Although Cloudflare R2 offers a generous free tier that note-taking workloads are unlikely to ever exceed, it requires binding a payment method (such as a dual-currency credit card) to activate. Based on personal experience, for users in mainland China, VISA cards from China Merchants Bank (CMB) or Shanghai Pudong Development Bank (SPDB) are typically the fastest to get verified (and most of these cards have no annual fees or easily waivable ones, so there are no extra holding costs).
+            <span class="font-semibold text-amber-950">Note:</span> Image and attachment blobs are stored as ordered shards inside the D1 database, so deployment no longer requires an R2 bucket or binding a payment method. The optional Advanced Object Storage feature still lets you offload new attachments to an S3-compatible service if you prefer.
           </p>
         ) : (
           <p>
-            <span class="font-semibold text-amber-950">提示：</span>Cloudflare R2 存储虽然提供了足够慷慨、在笔记场景中几乎永远不会超量的免费额度，但开通时仍需绑定支付方式（双币信用卡）。根据个人经验，在国内 VISA 信用卡中，招商和浦发的验证与开通最快捷，且这类卡片大多免年费（或极易通过刷卡免年费），无需担心持有成本。
+            <span class="font-semibold text-amber-950">提示：</span>图片与附件二进制内容以有序分片形式直接存入 D1 数据库，部署不再需要创建 R2 存储桶或绑定支付方式。如需将新附件卸载到 S3 兼容的对象存储，仍可使用可选的「高级对象存储」功能。
           </p>
         )}
       </div>

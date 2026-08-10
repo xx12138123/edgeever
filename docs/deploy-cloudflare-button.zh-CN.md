@@ -8,8 +8,7 @@
 
 ## 前置准备
 
-- **GitHub 账户**（用于 Fork 仓库及配置自动更新）
-- **Cloudflare 账户**（用于托管 Worker 逻辑、SQLite 数据库及文件存储）
+- **Cloudflare 账户**（用于托管 Worker 逻辑以及同时存储附件二进制分片的 SQLite D1 数据库）
 
 ---
 
@@ -23,16 +22,14 @@
 
 ---
 
-### 步骤 2：在 Cloudflare 创建存储与数据库资源
+### 步骤 2：在 Cloudflare 创建数据库资源
 
 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) 控制台：
 
 1. **创建 D1 数据库**：
    - 导航至 **Workers & Pages** -> **D1**，点击 **Create database**。
    - 数据库名称严格填入：`edgeever`，点击 **Create**。
-2. **创建 R2 存储桶**（用于存储笔记附件与图片）：
-   - 导航至 **Workers & Pages** -> **R2**，点击 **Create bucket**。
-   - 填入自定义存储桶名称（全局唯一，如 `my-edgeever-resources`），点击 **Create bucket**。
+   - 笔记附件与图片以有序分片形式存储在该 D1 数据库内，无需创建独立的存储桶。
 
 ---
 
@@ -48,7 +45,6 @@
 | 类型 (Type) | 名称 (Binding / Variable Name) | 值 / 绑定的资源 (Value / Resource) | 说明 |
 | :--- | :--- | :--- | :--- |
 | **D1 Database Binding** | `DB` | 选择 `edgeever` 数据库 | 存放笔记与结构化数据 |
-| **R2 Bucket Binding** | `RESOURCES` | 选择您创建的 R2 Bucket | 存放图片与图片附件 |
 | **Environment Variable** | `EDGE_EVER_AUTH_USERNAME` | `admin`（可改为自定义用户名） | 管理员登录用户名 |
 | **Environment Variable (Secret)** | `EDGE_EVER_AUTH_PASSWORD` | 设置您的管理员登录密码 | 初始登录凭据 |
 
@@ -97,7 +93,7 @@ EDGE_EVER_UPDATE_CHANNEL=edge
 
 ## 常见问题与排错
 
-- **首次构建失败**：请检查 Cloudflare 控制台中 Worker 的 **Deployments** 构建日志，确认 D1 Binding 为 `DB`、数据库名称严格为 `edgeever`、R2 Binding 为 `RESOURCES`，并确认 Workers Builds API Token 具有 D1 读取和编辑权限。如有意使用其他 D1 数据库，请添加构建变量 `EDGE_EVER_D1_DATABASE_ID` 并填入其 UUID。
+- **首次构建失败**：请检查 Cloudflare 控制台中 Worker 的 **Deployments** 构建日志，确认 D1 Binding 为 `DB`、数据库名称严格为 `edgeever`，并确认 Workers Builds API Token 具有 D1 读取和编辑权限。如有意使用其他 D1 数据库，请添加构建变量 `EDGE_EVER_D1_DATABASE_ID` 并填入其 UUID。
 - **无法同步上游更新**：
   1. 打开 Fork 的 **Actions**，启用 **Update deployed EdgeEver**（公共 Fork 上定时任务默认关闭）。
   2. 手动 **Run workflow** 一次，打开 Job **Summary**：会写明上游目标版本，以及本次是「已更新」「已对齐」还是失败。

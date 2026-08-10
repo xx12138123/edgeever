@@ -68,7 +68,7 @@ EdgeEver 采用纯 Serverless 架构，完全运行在 Cloudflare 免费配额�
 请在线完成 EdgeEver 部署：
 1. Fork https://github.com/tianma-if/edgeever。
 2. 将这个 Fork 导入 Cloudflare Workers & Pages。
-3. 配置 D1、R2、`EDGE_EVER_AUTH_USERNAME`（预填为 `admin`，可自定义）、`EDGE_EVER_AUTH_PASSWORD` Worker Secret 和生产环境 `main` 构建。
+3. 配置 D1、`EDGE_EVER_AUTH_USERNAME`（预填为 `admin`，可自定义）、`EDGE_EVER_AUTH_PASSWORD` Worker Secret 和生产环境 `main` 构建。
 4. 启动首次构建，验证 `/api/health`、`/api/openapi.json` 和登录。
 5. 启用并手动运行一次 `Update deployed EdgeEver`。
 ```
@@ -81,14 +81,14 @@ EdgeEver 采用纯 Serverless 架构，完全运行在 Cloudflare 免费配额�
 
 1. **Fork 仓库**：在 GitHub 点击右上角 **Fork**，将项目 Fork 到您的个人账户下。
 2. **导入 Cloudflare**：登录 Cloudflare 控制台，进入 **Workers & Pages**，选择导入该 Fork 仓库。
-3. **绑定资源与登录凭据**：绑定 D1 数据库（`DB`）、R2 存储桶（`RESOURCES`），设置 `EDGE_EVER_AUTH_USERNAME`（默认为 `admin`，可自定义），并添加 Worker Secret `EDGE_EVER_AUTH_PASSWORD` 作为管理员登录密码。
+3. **绑定资源与登录凭据**：绑定 D1 数据库（`DB`），设置 `EDGE_EVER_AUTH_USERNAME`（默认为 `admin`，可自定义），并添加 Worker Secret `EDGE_EVER_AUTH_PASSWORD` 作为管理员登录密码。图片与附件二进制内容以有序分片形式直接存入 D1，无需绑定 R2 存储桶。
 4. **启动构建与验证**：使用默认构建配置启动首次构建，部署完成后访问 `/api/health` 确认返回 `200` 即可开始使用。
 
 > 📖 包含具体参数与构建命令的详细步骤，请查看 [在线部署完整文档](docs/deploy-cloudflare-button.zh-CN.md)。
 
 ---
 
-> 💡 **部署提示（Cloudflare R2 绑定）**：虽然 Cloudflare R2 存储提供了足够慷慨、在笔记场景中几乎永远不会超量的免费额度，但开通时仍需绑定支付方式（双币信用卡）。根据个人经验，在国内 VISA 信用卡中，招商和浦发的验证与开通最快捷，且这类卡片大多免年费（或极易通过刷卡免年费），无需担心持有成本。
+> 💡 **部署提示（无需 R2）**：EdgeEver 将图片与附件二进制内容以有序分片形式直接存入 D1 数据库，部署不再需要创建 R2 存储桶或绑定支付方式。如需将新附件卸载到 S3 兼容的对象存储，仍可使用可选的「高级对象存储」功能。
 
 ## 多账号登录
 
@@ -139,7 +139,7 @@ macOS App 可从 [GitHub Releases](https://github.com/tianma-if/edgeever/release
 - iOS App：`apps/ios` 中的原生 SwiftUI（iOS 17+），内置 TipTap EditorBundle、GRDB 本地镜像/outbox，界面与 Android 壳层对齐。
 - 原生桌面端：Electron + Rust sidecar，兼顾跨平台一致体验与高性能本地数据服务；基于 SQLite 支持离线编辑、联网后增量同步与本地备份。
 - 网页裁剪：Manifest V3、Mozilla Readability、Turndown，支持 Chrome、Microsoft Edge 与 Firefox。
-- 后端：Cloudflare Workers、Hono、Zod、D1、R2，提供 REST API、OpenAPI 与 Remote MCP。
+- 后端：Cloudflare Workers、Hono、Zod、D1（含分片二进制存储），提供 REST API、OpenAPI 与 Remote MCP。
 
 ## 快速开始
 
@@ -166,7 +166,7 @@ scripts           Wrangler 封装、密码 hash、CLI、MCP stdio bridge、Evern
 migrations        D1 数据库迁移
 docs              OpenAPI schema、架构、迁移与部署文档
 .github/workflows Web、移动端、iOS、桌面端打包、部署与 Release 的 CI
-wrangler.toml     Cloudflare Workers、Assets、D1、R2 配置
+wrangler.toml     Cloudflare Workers、Assets、D1 配置
 ```
 
 ## 内容格式

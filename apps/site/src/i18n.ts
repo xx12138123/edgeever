@@ -62,13 +62,13 @@ export const siteCopy = {
       agentInstall: "一键 AI 部署",
       imageAlt: "EdgeEver product preview",
       badgeText: "💡 支持印象笔记、Notion、Memos 零成本平替，双 MCP 自动搬家",
-      terminalCmd: "帮我在 Cloudflare 部署 EdgeEver：Fork https://github.com/tianma-if/edgeever 并绑定 D1/R2",
+      terminalCmd: "帮我在 Cloudflare 部署 EdgeEver：Fork https://github.com/tianma-if/edgeever 并绑定 D1",
       terminalSub: "Agent 原生 · 复制 Prompt 粘贴给 Cursor / Claude Code / Antigravity 即可自动部署",
       copySuccess: "部署 Prompt 已复制！粘贴给 AI 助手即可部署",
       agentPromptText: `帮我在 Cloudflare 部署 EdgeEver：
 1. Fork https://github.com/tianma-if/edgeever
 2. 导入 Cloudflare Workers & Pages
-3. 绑定 D1 (DB)、R2 (RESOURCES) 并配置 EDGE_EVER_AUTH_PASSWORD 密钥
+3. 绑定 D1 (DB) 并配置 EDGE_EVER_AUTH_PASSWORD 密钥
 4. 启动首次构建并验证 /api/health`,
     },
     bento: {
@@ -315,13 +315,13 @@ export const siteCopy = {
       agentInstall: "Deploy with AI",
       imageAlt: "EdgeEver product preview",
       badgeText: "💡 Serverless: Migrate from Evernote, Notion & Memos via Dual-MCP",
-      terminalCmd: "Deploy EdgeEver on Cloudflare: Fork https://github.com/tianma-if/edgeever & bind D1/R2",
+      terminalCmd: "Deploy EdgeEver on Cloudflare: Fork https://github.com/tianma-if/edgeever & bind D1",
       terminalSub: "Agent Native · Copy prompt to Cursor / Claude Code / Antigravity to deploy automatically",
       copySuccess: "Deployment Prompt copied! Paste into AI Assistant",
       agentPromptText: `Deploy EdgeEver on Cloudflare:
 1. Fork https://github.com/tianma-if/edgeever
 2. Import into Cloudflare Workers & Pages
-3. Bind D1 (DB), R2 (RESOURCES) and set EDGE_EVER_AUTH_PASSWORD secret
+3. Bind D1 (DB) and set EDGE_EVER_AUTH_PASSWORD secret
 4. Start first build and verify /api/health`,
     },
     bento: {

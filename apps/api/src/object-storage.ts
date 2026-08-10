@@ -6,6 +6,7 @@ import { createWorkerS3BlobStore, type WorkerS3Config } from "./worker-s3-blob-s
 
 export const BUILTIN_STORAGE_CONFIG_ID = "builtin";
 export const S3_STORAGE_CONFIG_ID = "instance-s3";
+export const BUILTIN_BUCKET_NAME = "d1-blob-store";
 
 export const resolveObjectStorageEncryptionKey = (value: string | undefined) => {
   const key = value?.trim();
@@ -29,7 +30,6 @@ export type ObjectStorageConfigRow = {
 type ObjectStorageEnvironment = {
   storage: { db: DatabaseAdapter; resources: BlobStoreAdapter };
   EDGE_EVER_STORAGE_ENCRYPTION_KEY?: string;
-  EDGE_EVER_R2_BUCKET_NAME?: string;
 };
 
 const selectConfigSql = `SELECT id, provider, display_name, endpoint, region, bucket, access_key_id,
@@ -95,7 +95,7 @@ export const resolveObjectStorage = async (env: ObjectStorageEnvironment, config
   if (!row || row.provider === "builtin") {
     return {
       configId: BUILTIN_STORAGE_CONFIG_ID,
-      bucketName: env.EDGE_EVER_R2_BUCKET_NAME?.trim() || "edgeever-resources",
+      bucketName: BUILTIN_BUCKET_NAME,
       store: env.storage.resources,
     };
   }

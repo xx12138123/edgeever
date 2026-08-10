@@ -16,7 +16,7 @@ Use this page for advanced configuration, troubleshooting, and emergency recover
    bun run deploy:manual
    ```
 
-`deploy:setup` creates or reuses D1 and R2 and writes configuration to the git-ignored `.env.local`. Without `EDGE_EVER_PASSWORD`, the default login is `admin` / `admin123`.
+`deploy:setup` creates or reuses D1 and writes configuration to the git-ignored `.env.local`. Without `EDGE_EVER_PASSWORD`, the default login is `admin` / `admin123`.
 
 After deployment, confirm:
 
@@ -30,14 +30,12 @@ After deployment, confirm:
 cp .env.local.example .env.local
 bun install
 bunx wrangler d1 create edgeever
-bunx wrangler r2 bucket create edgeever-resources
 ```
 
-Write the returned D1 ID and resource names to `.env.local`:
+Write the returned D1 ID to `.env.local`:
 
 ```text
 EDGE_EVER_D1_DATABASE_ID=<database_id>
-EDGE_EVER_R2_BUCKET_NAME=edgeever-resources
 EDGE_EVER_AUTH_USERNAME=admin
 EDGE_EVER_AUTH_PASSWORD=<strong password>
 EDGE_EVER_SESSION_TTL_DAYS=400

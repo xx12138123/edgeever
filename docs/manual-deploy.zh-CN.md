@@ -16,7 +16,7 @@
    bun run deploy:manual
    ```
 
-`deploy:setup` 会创建或复用 D1、R2，并将配置写入被 Git 忽略的 `.env.local`。不设置 `EDGE_EVER_PASSWORD` 时，默认登录为 `admin` / `admin123`。
+`deploy:setup` 会创建或复用 D1，并将配置写入被 Git 忽略的 `.env.local`。不设置 `EDGE_EVER_PASSWORD` 时，默认登录为 `admin` / `admin123`。
 
 部署完成后，确认：
 
@@ -30,14 +30,12 @@
 cp .env.local.example .env.local
 bun install
 bunx wrangler d1 create edgeever
-bunx wrangler r2 bucket create edgeever-resources
 ```
 
-将返回的 D1 ID 和资源名称写入 `.env.local`：
+将返回的 D1 ID 写入 `.env.local`：
 
 ```text
 EDGE_EVER_D1_DATABASE_ID=<database_id>
-EDGE_EVER_R2_BUCKET_NAME=edgeever-resources
 EDGE_EVER_AUTH_USERNAME=admin
 EDGE_EVER_AUTH_PASSWORD=<强密码>
 EDGE_EVER_SESSION_TTL_DAYS=400
