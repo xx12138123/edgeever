@@ -12,7 +12,7 @@ run_worker_first = ["/api/*", "/mcp", "/__scheduled"]
 [[d1_databases]]
 binding = "DB"
 database_name = "edgeever"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "195180a5-58cc-48cb-8d50-3507127c6780"
 migrations_dir = "migrations"
 
 [observability]
