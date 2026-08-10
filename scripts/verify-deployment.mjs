@@ -12,6 +12,7 @@ export const REQUIRED_TABLES = [
   "memo_shares",
   "memo_import_sources",
   "mobile_sync_changes",
+  "resource_blobs",
 ];
 
 export const buildSchemaVerificationSql = () =>

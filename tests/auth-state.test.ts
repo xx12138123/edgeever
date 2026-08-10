@@ -51,4 +51,10 @@ describe("instance authentication state", () => {
     expect(isDatabaseNotReadyError(new TypeError("Cannot read properties of undefined (reading 'prepare')"))).toBe(true);
     expect(isDatabaseNotReadyError(new Error("network timeout"))).toBe(false);
   });
+
+  test("does not flag routine D1 query errors as database-not-ready", () => {
+    expect(isDatabaseNotReadyError(new Error("D1_ERROR: UNIQUE constraint failed: users.username"))).toBe(false);
+    expect(isDatabaseNotReadyError(new Error("D1_ERROR: CHECK constraint failed"))).toBe(false);
+    expect(isDatabaseNotReadyError(new Error("D1_ERROR: 7500: SQLITE_ERROR"))).toBe(false);
+  });
 });

@@ -199,7 +199,7 @@ export const siteCopy = {
           summary: "彻底告别购买云服务器月租与繁琐维护。利用 Cloudflare 卓越的无服务器架构，个人使用终身免费。",
           points: [
             "完全免服务器：无需配置 Docker、Nginx 或证书，一句话即可直接部署至 Cloudflare。",
-            "日常使用完全免费：充分利用 Cloudflare Workers、D1 与 R2 免费级配额（可存 15 万条笔记 + 5 万张图片）。",
+            "日常使用完全免费：充分利用 Cloudflare Workers 与 D1 免费级配额（可存 15 万条笔记 + 5 万张图片）。",
             "数据安全尽在掌握：虽然免服务器，但数据并非存在第三方，而是保存在你自己的 Cloudflare 账号中。",
           ],
         },
@@ -452,7 +452,7 @@ export const siteCopy = {
           summary: "Say goodbye to server rental fees and complex system management. EdgeEver runs entirely within Cloudflare's free tiers.",
           points: [
             "No Server Required: No need for Docker, Nginx, or SSL configuration. Deploy directly to Cloudflare with one simple tool.",
-            "100% Free Forever: Take full advantage of free tiers for Cloudflare Workers, D1, and R2 (supports up to 150k notes and 50k images).",
+            "100% Free Forever: Take full advantage of free tiers for Cloudflare Workers and D1 (supports up to 150k notes and 50k images).",
             "Full Data Ownership: Serverless doesn't mean third-party storage. All your notes live securely within your own Cloudflare account.",
           ],
         },

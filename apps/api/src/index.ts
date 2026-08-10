@@ -1008,7 +1008,7 @@ const callMcpTool = async (
 };
 
 const getInstanceAuthMode = async (env: Bindings): Promise<InstanceAuthMode> => {
-  if (!env.storage.db || typeof env.storage.db.prepare !== "function") {
+  if (!env.storage?.db || typeof env.storage.db.prepare !== "function") {
     throw new AppError(
       "database_not_ready",
       "Database is not ready. Bind the D1 database as DB and apply the remote migrations.",
@@ -1021,6 +1021,7 @@ const getInstanceAuthMode = async (env: Bindings): Promise<InstanceAuthMode> => 
     user = await env.storage.db.prepare(`SELECT id FROM users WHERE is_disabled = 0 LIMIT 1`).first<{ id: string }>();
   } catch (error) {
     if (isDatabaseNotReadyError(error)) {
+      console.error("EdgeEver database readiness check failed", error);
       throw new AppError(
         "database_not_ready",
         "Database is not ready. Bind the D1 database as DB and apply the remote migrations.",

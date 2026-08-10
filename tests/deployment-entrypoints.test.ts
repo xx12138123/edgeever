@@ -77,8 +77,6 @@ describe("Cloudflare deployment entrypoints", () => {
           'name = "edgeever"',
           'database_name = "edgeever"',
           'database_id = "00000000-0000-0000-0000-000000000000"',
-          'bucket_name = "edgeever-resources"',
-          'preview_bucket_name = "edgeever-resources-preview"',
           'migrations_dir = "migrations"',
           "",
         ].join("\n"),
@@ -204,5 +202,24 @@ describe("Cloudflare deployment entrypoints", () => {
     expect(chineseAgentDoc).toContain("Workers & Pages");
     expect(chineseAgentDoc).not.toContain("bun run deploy:manual");
     expect(chineseAgentDoc).not.toContain("bun run deploy:manual");
+  });
+
+  test("deployment no longer requires an R2 bucket binding", () => {
+    const wranglerConfig = readRepositoryFile("wrangler.toml");
+    expect(wranglerConfig).not.toContain("r2_buckets");
+    expect(wranglerConfig).not.toContain("RESOURCES");
+    expect(wranglerConfig).not.toContain("bucket_name");
+
+    const envExample = readRepositoryFile(".env.local.example");
+    expect(envExample).not.toContain("EDGE_EVER_R2_BUCKET_NAME");
+    expect(envExample).not.toContain("EDGE_EVER_R2_PREVIEW_BUCKET_NAME");
+
+    const deployScript = readRepositoryFile("scripts/cloudflare-deploy.mjs");
+    expect(deployScript).not.toContain("ensureR2");
+    expect(deployScript).not.toContain("R2_BUCKET_NAME");
+
+    const runnerScript = readRepositoryFile("scripts/run-wrangler.mjs");
+    expect(runnerScript).not.toContain("R2_BUCKET_NAME");
+    expect(runnerScript).not.toContain("R2_PREVIEW_BUCKET_NAME");
   });
 });

@@ -59,4 +59,4 @@ The Firefox package declares the data types required by its user-triggered clipp
 
 No data is sent to an EdgeEver-operated relay, analytics service, or advertising service.
 
-The next planned step is preserving a single-file HTML archive in R2 while keeping extracted text in the memo for search.
+The next planned step is preserving a single-file HTML archive in the object store while keeping extracted text in the memo for search.
